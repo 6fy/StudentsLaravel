@@ -9,12 +9,10 @@
 </head>
 <body>
 
-<h1>Welcome to your Admin Dashboard, {{ $data['user']->name }}</h1>
+<h1>Welcome to your Admin panel, {{ $data['user']->name }}</h1>
 <hr />
 
 <a href="/dashboard">Back to dashboard</a>
-<hr />
-
 <a href="/student/add">Add a student</a>
 <hr />
 
