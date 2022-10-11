@@ -4,20 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\User;
+use Session;
 
 class StudentController extends Controller
 {
     public function addStudentView()
     {
-        return view('students.add');
+        $user = User::where('id', '=', Session::get('loginId'))->first();
+        return view('students.add', compact('user'));
     }
 
     public function editStudentView($id)
-    {
+    {        
         $student = Student::find($id);
         if ($student == null) return redirect('/');
 
-        return view('students.edit', [ 'student' => $student ] );
+        $user = User::where('id', '=', Session::get('loginId'))->first();
+
+        $data = [
+            'student' => $student,
+            'user' => $user
+        ];
+
+        return view('students.edit', [ 'data' => $data ]);
     }
 
     public function addStudent(Request $request)

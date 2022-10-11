@@ -12,11 +12,21 @@ class AuthController extends Controller
 
     public function login() 
     {
+        if (Session::has('loginId')) {
+            $user = User::where('id', '=', Session::get('loginId'))->first();
+            return view('dashboard', compact('user'));
+        }
+
         return view('auth.login');
     }
 
     public function register()
     {
+        if (Session::has('loginId')) {
+            $user = User::where('id', '=', Session::get('loginId'))->first();
+            return view('dashboard', compact('user'));
+        }
+
         return view('auth.register');
     }
 
