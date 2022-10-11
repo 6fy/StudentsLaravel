@@ -92,6 +92,7 @@ button[type=submit] {
     background-color: #56baed;
     color: white;
     padding: 15px 80px;
+	cursor: pointer;
     text-align: center;
     text-decoration: none;
     display: inline-block;

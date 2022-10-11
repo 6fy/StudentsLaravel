@@ -55,6 +55,8 @@ class AuthController extends Controller
         $res = $user->save();
 
         if ($res) {
+            \Log::info('loginId => ' . $user->id . ".");
+            session()->put('loginId', $user->id);
             $request->session()->put('loginId', $user->id);
             return redirect('/dashboard');
         } else {
@@ -78,6 +80,8 @@ class AuthController extends Controller
             return back()->with('failed', 'The name or password is incorrect!');
         }
 
+        \Log::info('loginId => ' . $user->id . ".");
+        session()->put('loginId', $user->id);
         $request->session()->put('loginId', $user->id);
         return redirect('/dashboard');
     }

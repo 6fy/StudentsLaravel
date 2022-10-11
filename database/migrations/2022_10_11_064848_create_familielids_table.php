@@ -14,14 +14,15 @@ class CreateFamilielidsTable extends Migration
     public function up()
     {
         Schema::create('familielids', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
 
-            $table->unsignedInteger('familie_id');
-            $table->foreign('familie_id')->references('id')->on('familie')->onDelete('cascade');
-            
             $table->string('naam');
             $table->string('geboorte-datum');
             $table->string('lid');
+
+            $table->unsignedBigInteger('familie_id');
+            $table->foreign('familie_id')->references('id')->on('families')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

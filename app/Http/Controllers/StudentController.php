@@ -63,27 +63,15 @@ class StudentController extends Controller
         $student = Student::find($id);
         if ($student == null) return back()->with('failed', 'Could not edit student');
 
-        $firstname = $request->firstname;
-        if ($firstname == null) {
-            $firstname = $student->firstname;
-            if ($firstname == null) return back()->with('failed', 'Could not edit student');
-        }
-
-        $lastname = $request->lastname;
-        if ($lastname == null) {
-            $lastname = $student->lastname;
-            if ($lastname == null) return back()->with('failed', 'Could not edit student');
-        }
-
-        $occupation = $request->occupation;
-        if ($occupation == null) {
-            $occupation = $student->occupation;
-            if ($occupation == null) return back()->with('failed', 'Could not edit student');
-        }
-
-        $student->firstname = $firstname;
-        $student->lastname = $lastname;
-        $student->occupation = $occupation;
+        $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'occupation' => 'required'
+        ]);
+        
+        $student->firstname = $request->firstname;
+        $student->lastname = $request->lastname;
+        $student->occupation = $request->occupation;
         
         $student->save();
 

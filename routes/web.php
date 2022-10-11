@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\FamilieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,12 @@ Route::get('/student/add', [ StudentController::class, 'addStudentView' ])->midd
 Route::get('/student/edit/{id}', [ StudentController::class, 'editStudentView' ])->middleware('isAnAdministrator');
 
 /*
+    Family views
+*/
+Route::get('/familie', [ FamilieController::class, 'familieView' ])->middleware('isAnAdministrator');
+Route::get('/familie/add', [ FamilieController::class, 'addFamilieView' ])->middleware('isAnAdministrator');
+
+/*
     Login views
 */
 Route::get('/login', [ AuthController::class, 'login' ])->middleware('alreadyLoggedIn');
@@ -49,3 +56,10 @@ Route::post('loginUserRoute', [ AuthController::class, 'loginUser' ])->name('log
 Route::post('addStudentRoute', [ StudentController::class, 'addStudent' ])->middleware('isAnAdministrator')->name('addStudent');
 Route::post('editStudentRoute/{id}', [ StudentController::class, 'editStudent' ])->middleware('isAnAdministrator')->name('editStudent');
 Route::get('deleteStudentRoute/{id}', [ StudentController::class, 'deleteStudent' ])->middleware('isAnAdministrator')->name('deleteStudent');
+
+/*
+    Family functions
+*/
+Route::post('addFamilyRoute', [ FamilieController::class, 'addFamily' ])->middleware('isAnAdministrator')->name('addFamily');
+Route::post('editFamilyRoute/{id}', [ FamilieController::class, 'editFamily' ])->middleware('isAnAdministrator')->name('editFamily');
+Route::get('deleteFamilyRoute/{id}', [ FamilieController::class, 'deleteFamily' ])->middleware('isAnAdministrator')->name('deleteFamily');
