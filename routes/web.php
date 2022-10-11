@@ -40,12 +40,12 @@ Route::get('/logout', [ AuthController::class, 'logout' ])->middleware('isLogged
 /*
     Login functions
 */
-Route::post('registerUserRoute', [ AuthController::class, 'registerUser' ])->name('registerUser');
-Route::post('loginUserRoute', [ AuthController::class, 'loginUser' ])->name('loginUser');
+Route::post('registerUserRoute', [ AuthController::class, 'registerUser' ])->middleware('isLoggedIn')->name('registerUser');
+Route::post('loginUserRoute', [ AuthController::class, 'loginUser' ])->middleware('isLoggedIn')->name('loginUser');
 
 /*
     Student functions
 */
-Route::post('addStudentRoute', [ StudentController::class, 'addStudent' ])->name('addStudent');
-Route::post('editStudentRoute/{id}', [ StudentController::class, 'editStudent' ])->name('editStudent');
-Route::get('deleteStudentRoute/{id}', [ StudentController::class, 'deleteStudent' ])->name('deleteStudent');
+Route::post('addStudentRoute', [ StudentController::class, 'addStudent' ])->middleware('isAnAdministrator')->name('addStudent');
+Route::post('editStudentRoute/{id}', [ StudentController::class, 'editStudent' ])->middleware('isAnAdministrator')->name('editStudent');
+Route::get('deleteStudentRoute/{id}', [ StudentController::class, 'deleteStudent' ])->middleware('isAnAdministrator')->name('deleteStudent');
