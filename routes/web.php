@@ -40,8 +40,8 @@ Route::get('/logout', [ AuthController::class, 'logout' ])->middleware('isLogged
 /*
     Login functions
 */
-Route::post('registerUserRoute', [ AuthController::class, 'registerUser' ])->middleware('isLoggedIn')->name('registerUser');
-Route::post('loginUserRoute', [ AuthController::class, 'loginUser' ])->middleware('isLoggedIn')->name('loginUser');
+Route::post('registerUserRoute', [ AuthController::class, 'registerUser' ])->name('registerUser');
+Route::post('loginUserRoute', [ AuthController::class, 'loginUser' ])->name('loginUser');
 
 /*
     Student functions
