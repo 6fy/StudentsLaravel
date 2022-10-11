@@ -12,10 +12,11 @@
     <hr />
 
     @if(Session::has('failed'))
-        {{ Session::get('failed') }}
+        <p>{{ Session::get('failed') }}</p>
+        <hr />
     @endif
 
-    <form method="post" action="{{ route('loginUser') }}">
+    <form method="post" action="{{ route('loginUser') }}" accept-charset="UTF-8">
         @csrf
 
         <label for="name">Name (username/id)</label>

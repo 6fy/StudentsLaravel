@@ -45,6 +45,7 @@ class AuthController extends Controller
         $res = $user->save();
 
         if ($res) {
+            $request->session()->put('loginId', $user->id);
             return redirect('/dashboard');
         } else {
             return redirect('/register');

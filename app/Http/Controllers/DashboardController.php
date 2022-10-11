@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use App\Models\Student;
 use Session;
 
 class DashboardController extends Controller
@@ -17,7 +18,11 @@ class DashboardController extends Controller
 
     public function admin()
     {
-        $user = User::where('id', '=', Session::get('loginId'))->first();
-        return view('admin', compact('user'));
+        $data = [
+            'user' => User::where('id', '=', Session::get('loginId'))->first(),
+            'students' => Student::all()
+        ];
+
+        return view('admin', [ 'data' => $data ] );
     }
 }

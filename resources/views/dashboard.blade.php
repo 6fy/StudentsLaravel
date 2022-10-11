@@ -13,8 +13,10 @@
 
 @if($user->is_admin == 1)
     <a href="/admin">Admin</a>
-    <hr />
+@else
+    <p>You need to be an administrator to access the Admin panel!</p>
 @endif
+<hr />
 
 <a href="/logout">Logout</a>
 

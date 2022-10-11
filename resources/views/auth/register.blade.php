@@ -11,7 +11,7 @@
     <h4>Register</h4>
     <hr />
 
-    <form method="post" action="{{ route('registerUser') }}">
+    <form method="post" action="{{ route('registerUser') }}" accept-charset="UTF-8">
         @csrf
 
         <label for="name">Name (username/id)</label>
