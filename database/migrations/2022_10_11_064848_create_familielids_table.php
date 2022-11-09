@@ -17,7 +17,7 @@ class CreateFamilielidsTable extends Migration
             $table->id();
 
             $table->string('naam');
-            $table->string('geboorte-datum');
+            $table->string('geboorte_datum');
             $table->string('lid');
 
             $table->unsignedBigInteger('familie_id');

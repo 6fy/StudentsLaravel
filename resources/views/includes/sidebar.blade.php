@@ -7,15 +7,15 @@
         </a>
       </li>
       <li class="sidebar-list-item">
-        <a href="/admin">
-          <i style="margin-right: 10px; cursor: pointer;" class="fa-solid fa-graduation-cap"></i>
-          <span>Students</span>
+        <a href="/familie">
+          <i style="margin-right: 10px; cursor: pointer;" class="fa-solid fa-user"></i>
+          <span>Families</span>
         </a>
       </li>
       <li class="sidebar-list-item">
-        <a href="/familie">
+        <a href="/members">
           <i style="margin-right: 10px; cursor: pointer;" class="fa-solid fa-user"></i>
-          <span>Familie</span>
+          <span>Family members</span>
         </a>
       </li>
     </ul>

@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\FamilieController;
+use App\Http\Controllers\FamilieMemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,14 @@ Route::get('/familie/add', [ FamilieController::class, 'addFamilieView' ])->midd
 Route::get('/familie/edit/{id}', [ FamilieController::class, 'editFamilyView' ])->middleware('isAnAdministrator');
 
 /*
+    Family Member views
+*/
+Route::get('/members', [ FamilieMemberController::class, 'familieMemberView' ])->middleware('isAnAdministrator');
+Route::get('/members/add', [ FamilieMemberController::class, 'addFamilieMemberView' ])->middleware('isAnAdministrator');
+Route::get('/members/edit/{id}', [ FamilieMemberController::class, 'editFamilyMemberView' ])->middleware('isAnAdministrator');
+
+
+/*
     Login views
 */
 Route::get('/login', [ AuthController::class, 'login' ])->middleware('alreadyLoggedIn');
@@ -64,3 +73,10 @@ Route::get('deleteStudentRoute/{id}', [ StudentController::class, 'deleteStudent
 Route::post('addFamilyRoute', [ FamilieController::class, 'addFamily' ])->middleware('isAnAdministrator')->name('addFamily');
 Route::post('editFamilyRoute/{id}', [ FamilieController::class, 'editFamily' ])->middleware('isAnAdministrator')->name('editFamily');
 Route::get('deleteFamilyRoute/{id}', [ FamilieController::class, 'deleteFamily' ])->middleware('isAnAdministrator')->name('deleteFamily');
+
+/*
+    Family member functions
+*/
+Route::post('addFamilyMemberRoute', [ FamilieMemberController::class, 'addFamilyMember' ])->middleware('isAnAdministrator')->name('addFamilyMember');
+Route::post('editFamilyMemberRoute/{id}', [ FamilieMemberController::class, 'editFamilyMember' ])->middleware('isAnAdministrator')->name('editFamilyMember');
+Route::get('deleteFamilyMemberRoute/{id}', [ FamilieMemberController::class, 'deleteFamilyMember' ])->middleware('isAnAdministrator')->name('deleteFamilyMember');

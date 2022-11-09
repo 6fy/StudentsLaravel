@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Students - Edit a student</title>
+    <title>Students - Add a student</title>
     <script src="https://kit.fontawesome.com/a71e7d302d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{{ url('css/app.css') }}">
 </head>
@@ -12,23 +12,24 @@
 
 <div class="app-container">
   @include('includes.sidebar')
-
+  
   <div class="app-content">
     @include('includes.header', [
-      'mainTitle' => "Edit family: " . $data['family']->naam, 
+      'mainTitle' => "Add a family member", 
       'buttons' => [
-        ['title' => "Back to the familie panel", 'href' => "/familie"], 
+        ['title' => "Back to the family member panel", 'href' => "/members"], 
         ['title' => "Back to the dashboard", 'href' => "/dashboard"]
       ]
     ])
-    
+
     <div class="products-area-wrapper tableView">
+
         <section class="form-holder">
-            <form method="post" action="{{ route('editFamily', $data['family']->id) }}" accept-charset="UTF-8">
+            <form method="post" action="{{ route('addFamilyMember') }}" accept-charset="UTF-8">
                 @csrf
 
                 <label for="name">Family name</label>
-                <input type="text" name="name" placeholder="Enter the family name" value="{{ $data['family']->naam }}">
+                <input type="text" name="name" placeholder="Enter the family name" value="{{ old('name') }}">
 
                 <span>
                     @error('name')
@@ -38,7 +39,7 @@
                 <br />
 
                 <label for="address">Family address</label>
-                <input type="address" name="address" placeholder="Enter the address" value="{{ $data['family']->adres }}">
+                <input type="address" name="address" placeholder="Enter the address" value="{{ old('address') }}">
 
                 <span>
                     @error('address')
@@ -47,9 +48,10 @@
                 </span>
                 <br />
 
-                <button type="submit">Edit family</button>
+                <button type="submit">Add family</button>
             </form>
         </section>
+
     </div>
 </div>
 @include('includes.footer')
