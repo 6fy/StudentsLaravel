@@ -12,7 +12,27 @@ class FamilieController extends Controller
     public function addFamilieView()
     {
         $user = User::where('id', '=', Session::get('loginId'))->first();
-        return view('familie.add', compact('user'));
+
+        $data = [
+            'user' => $user
+        ];
+
+        return view('familie.add', [ 'data' => $data ]);
+    }
+
+    public function editFamilyView($id)
+    {        
+        $family = Familie::find($id);
+        if ($family == null) return redirect('/familie');
+
+        $user = User::where('id', '=', Session::get('loginId'))->first();
+
+        $data = [
+            'family' => $family,
+            'user' => $user
+        ];
+
+        return view('familie.edit', [ 'data' => $data ]);
     }
 
     public function familieView()

@@ -36,6 +36,7 @@ Route::get('/student/edit/{id}', [ StudentController::class, 'editStudentView' ]
 */
 Route::get('/familie', [ FamilieController::class, 'familieView' ])->middleware('isAnAdministrator');
 Route::get('/familie/add', [ FamilieController::class, 'addFamilieView' ])->middleware('isAnAdministrator');
+Route::get('/familie/edit/{id}', [ FamilieController::class, 'editFamilyView' ])->middleware('isAnAdministrator');
 
 /*
     Login views

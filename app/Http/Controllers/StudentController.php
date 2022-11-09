@@ -12,7 +12,12 @@ class StudentController extends Controller
     public function addStudentView()
     {
         $user = User::where('id', '=', Session::get('loginId'))->first();
-        return view('students.add', compact('user'));
+
+        $data = [
+            'user' => $user
+        ];
+
+        return view('students.add', [ 'data' => $data ]);
     }
 
     public function editStudentView($id)

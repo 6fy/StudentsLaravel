@@ -14,7 +14,7 @@ class CreateFamilielidsTable extends Migration
     public function up()
     {
         Schema::create('familielids', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
 
             $table->string('naam');
             $table->string('geboorte-datum');

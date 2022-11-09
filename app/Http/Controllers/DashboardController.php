@@ -13,7 +13,12 @@ class DashboardController extends Controller
     public function index()
     {
         $user = User::where('id', '=', Session::get('loginId'))->first();
-        return view('dashboard', compact('user'));
+
+        $data = [
+            'user' => $user
+        ];
+
+        return view('dashboard', [ 'data' => $data ]);
     }
 
     public function admin()

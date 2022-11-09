@@ -17,7 +17,7 @@ class AuthMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (!Session()->has('loginId')) {
-            return redirect('/login')->with('failed', 'You are not logged in! => ' . Session()->has('loginId') . ".");
+            return redirect('/login')->with('failed', 'You are not logged in!');
         }
 
         return $next($request);

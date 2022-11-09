@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Students - Dashboard</title>
+    <title>Students - Edit a student</title>
     <script src="https://kit.fontawesome.com/a71e7d302d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{{ url('css/app.css') }}">
 </head>
@@ -12,20 +12,18 @@
 
 <div class="app-container">
   @include('includes.sidebar')
+
   <div class="app-content">
     @include('includes.header', [
-      'mainTitle' => "Dashboard", 
+      'mainTitle' => "Edit family: " . $data['family']->naam, 
       'buttons' => [
-        ['title' => "Admin", 'href' => "/admin"]
-      ],
-      'pageLeader' => "Welcome to your Dashboard, " . $data['user']->name
+        ['title' => "Back to the familie panel", 'href' => "/familie"], 
+        ['title' => "Back to the dashboard", 'href' => "/dashboard"]
+      ]
     ])
-
+    
     <div class="products-area-wrapper tableView">
-        <p class="white-text">There is no information to be displayed here.</p>
-        @if($data['user']->is_admin == 0)
-            <p class="white-text">Make yourself an admin in the database to continue using the website.</p>
-        @endif
+        
     </div>
 </div>
 @include('includes.footer')
