@@ -82,6 +82,10 @@ h2.active {
 
 /* FORM TYPOGRAPHY*/
 
+input[type=submit]:hover {
+  cursor: pointer;
+}
+
 input[type=button], input[type=submit], input[type=reset]  {
   background-color: #56baed;
   border: none;

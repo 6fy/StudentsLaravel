@@ -4,17 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Familie;
 use App\Models\FamilieLid;
 use Session;
 
 class FamilieMemberController extends Controller
 {
-    public function addFamilieMemberView()
+    public function addFamilieMemberView($id)
     {
         $user = User::where('id', '=', Session::get('loginId'))->first();
 
+        $family = Familie::find($id);
+        if ($family == null) return redirect('/familie');
+
         $data = [
-            'user' => $user
+            'user' => $user,
+            'family' => $family
         ];
 
         return view('members.add', [ 'data' => $data ]);
@@ -25,46 +30,58 @@ class FamilieMemberController extends Controller
         $member = FamilieLid::find($id);
         if ($member == null) return redirect('/members');
 
+        $family = Familie::find($member->familie_id);
+        if ($family == null) return redirect('/familie');
+
         $user = User::where('id', '=', Session::get('loginId'))->first();
+
+        $name = ucfirst($member->naam);
+        if (!str_contains(strtolower($member->naam), strtolower($family->naam))) {
+            $name = $name . " " . ucfirst($family->naam);
+        }
 
         $data = [
             'member' => $member,
+            'formattedName' => $name,
+            'family' => $family,
             'user' => $user
         ];
 
         return view('members.edit', [ 'data' => $data ]);
     }
 
-    public function familieMemberView()
+    public function familieMemberView($id)
     {
+        $family = Familie::find($id);
+        if ($family == null) return redirect('/familie');
+
         $data = [
             'user' => $user = User::where('id', '=', Session::get('loginId'))->first(),
-            'members' => FamilieLid::all()
+            'family' => $family,
+            'members' => FamilieLid::where('familie_id', '=', $id)->get()
         ];
 
         return view('members.dashboard', [ 'data' => $data ]);
     }
 
-    public function addFamilyMember(Request $request)
+    public function addFamilyMember(Request $request, $id)
     {
-        $request->vaFamilieLidate([
+        $request->validate([
             'name' => 'required',
-            'birthDate' => 'required',
-            'memberType' => 'required',
-            'familyId' => 'required',
+            'birthdate' => 'required'
         ]);
 
         $member = new FamilieLid();
 
         $member->naam = $request->name;
-        $member->geboorte_datum = $request->birthDate;
-        $member->lid = $request->memberType;
-        $member->familie_id = $request->familyId;
+        $member->geboorte_datum = $request->birthdate;
+        $member->lid = '?';
+        $member->familie_id = $id;
 
         $res = $member->save();
 
         if ($res) {
-            return redirect('/members');
+            return redirect('/members/' . $id);
         } else {
             return back()->with('failed', 'Something went wrong whilst adding this family member!');
         }
@@ -77,7 +94,7 @@ class FamilieMemberController extends Controller
 
         $member->delete();
 
-        return redirect('/members');
+        return redirect('/members/' . $member->familie_id);
     }
 
     public function editFamilyMember(Request $request, $id)
@@ -85,20 +102,17 @@ class FamilieMemberController extends Controller
         $member = FamilieLid::find($id);
         if ($member == null) return back()->with('failed', 'Could not edit family member');
 
-        $request->vaFamilieLidate([
+        $request->validate([
             'name' => 'required',
-            'birthDate' => 'required',
-            'memberType' => 'required',
-            'familyId' => 'required',
+            'birthdate' => 'required'
         ]);
 
         $member->naam = $request->name;
-        $member->geboorte_datum = $request->birthDate;
-        $member->lid = $request->memberType;
-        $member->familie_id = $request->familyId;
+        $member->geboorte_datum = $request->birthdate;
+        $member->lid = '?';
         
         $member->save();
 
-        return redirect('/members');
+        return redirect('/members/' . $member->familie_id);
     }
 }
