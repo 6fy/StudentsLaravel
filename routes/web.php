@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\StudentController;
 use App\Http\Controllers\FamilieController;
 use App\Http\Controllers\FamilieMemberController;
 
@@ -24,13 +23,6 @@ use App\Http\Controllers\FamilieMemberController;
 */
 Route::get('/', [ AuthController::class, 'login' ])->middleware('isLoggedIn');
 Route::get('/dashboard', [ DashboardController::class, 'index' ])->middleware('isLoggedIn');
-Route::get('/admin', [ DashboardController::class, 'admin' ])->middleware('isAnAdministrator');
-
-/*
-    Student views
-*/
-Route::get('/student/add', [ StudentController::class, 'addStudentView' ])->middleware('isAnAdministrator');
-Route::get('/student/edit/{id}', [ StudentController::class, 'editStudentView' ])->middleware('isAnAdministrator');
 
 /*
     Family views
@@ -59,13 +51,6 @@ Route::get('/logout', [ AuthController::class, 'logout' ])->middleware('isLogged
 */
 Route::post('registerUserRoute', [ AuthController::class, 'registerUser' ])->name('registerUser');
 Route::post('loginUserRoute', [ AuthController::class, 'loginUser' ])->name('loginUser');
-
-/*
-    Student functions
-*/
-Route::post('addStudentRoute', [ StudentController::class, 'addStudent' ])->middleware('isAnAdministrator')->name('addStudent');
-Route::post('editStudentRoute/{id}', [ StudentController::class, 'editStudent' ])->middleware('isAnAdministrator')->name('editStudent');
-Route::get('deleteStudentRoute/{id}', [ StudentController::class, 'deleteStudent' ])->middleware('isAnAdministrator')->name('deleteStudent');
 
 /*
     Family functions
