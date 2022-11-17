@@ -15,7 +15,7 @@
   
   <div class="app-content">
     @include('includes.header', [
-      'mainTitle' => "Add a family member", 
+      'mainTitle' => "Add a family member to " . $data['family']->naam, 
       'buttons' => [
         ['title' => "Back to the family member panel", 'href' => "/members"], 
         ['title' => "Back to the dashboard", 'href' => "/dashboard"]
@@ -25,11 +25,11 @@
     <div class="products-area-wrapper tableView">
 
         <section class="form-holder">
-            <form method="post" action="{{ route('addFamilyMember') }}" accept-charset="UTF-8">
+            <form method="post" action="{{ route('addFamilyMember', $data['family']->id) }}" accept-charset="UTF-8">
                 @csrf
 
-                <label for="name">Family name</label>
-                <input type="text" name="name" placeholder="Enter the family name" value="{{ old('name') }}">
+                <label for="name">Family member name</label>
+                <input type="text" name="name" placeholder="Enter the name of the member" value="{{ old('name') }}">
 
                 <span>
                     @error('name')
@@ -38,17 +38,17 @@
                 </span>
                 <br />
 
-                <label for="address">Family address</label>
-                <input type="address" name="address" placeholder="Enter the address" value="{{ old('address') }}">
+                <label for="name">Family member birthdate</label>
+                <input type="date" name="birthdate" placeholder="Enter the birth date of the member" value="{{ old('birthdate') }}">
 
                 <span>
-                    @error('address')
+                    @error('birthdate')
                         <p>{{ $message }}</p>
                     @enderror
                 </span>
                 <br />
 
-                <button type="submit">Add family</button>
+                <button type="submit">Add family member</button>
             </form>
         </section>
 

@@ -14,17 +14,17 @@
   @include('includes.sidebar')
   <div class="app-content">
     @include('includes.header', [
-      'mainTitle' => "Family members", 
+      'mainTitle' => "Family members of " . $data['family']->naam, 
       'buttons' => [
-        ['title' => "Add a family member", 'href' => "/members/add"], 
+        ['title' => "Add a family member", 'href' => "/members/" . $data['family']->id . "/add"], 
         ['title' => "Back to the dashboard", 'href' => "/dashboard"]
       ]
     ])
 
     <div class="products-area-wrapper tableView">
         <div class="products-header">
-            <div class="product-cell category">Id</div>
-                <div class="product-cell image">Family Id</div>
+            <div class="product-cell category">Member Id</div>
+                <div class="product-cell status-cell">Full Name</div>
                 <div class="product-cell status-cell">Name</div>
                 <div class="product-cell status-cell">Birth date</div>
                 <div class="product-cell status-cell">Type</div>
@@ -34,7 +34,12 @@
               @foreach ($data['members'] as $member)
                 <div class="products-row">
                     <div class="product-cell category">{{ $member->id }}</div>
-                    <div class="product-cell category">{{ $member->familie_id }}</div>
+                    <div class="product-cell category">
+                      {{ ucfirst($member->naam) }} 
+                      @if (!str_contains(strtolower($member->naam), strtolower($data['family']->naam)))
+                        {{ ucfirst($data['family']->naam) }}
+                      @endif
+                    </div>
                     <div class="product-cell image">
                         <span>{{ $member->naam }}</span>
                     </div>
@@ -43,8 +48,8 @@
                     </div>
                     <div class="product-cell status-cell">{{ $member->lid }}</div>
                     <div class="product-cell price">
-                      <a href="/familie/edit/{{ $member->id }}"><i style="color: white; margin: 5px;" class="fas fa-pencil"></i></a>
-                      <a href="{{ route('deleteFamily', $member->id) }}"><i style="color: white; margin: 5px;" class="fas fa-trash"></i></a>
+                      <a href="/members/edit/{{ $member->id }}" title="Edit family member"><i style="color: white; margin: 5px;" class="fas fa-pencil"></i></a>
+                      <a href="{{ route('deleteFamilyMember', $member->id) }}" title="Delete family member"><i style="color: white; margin: 5px;" class="fas fa-trash"></i></a>
                     </div>
                 </div>
               @endforeach

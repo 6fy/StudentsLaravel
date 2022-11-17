@@ -12,12 +12,6 @@
           <span>Families</span>
         </a>
       </li>
-      <li class="sidebar-list-item">
-        <a href="/members">
-          <i style="margin-right: 10px; cursor: pointer;" class="fa-solid fa-user"></i>
-          <span>Family members</span>
-        </a>
-      </li>
     </ul>
     <div class="account-info">
       <div class="account-info-picture">

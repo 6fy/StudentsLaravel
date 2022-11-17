@@ -37,8 +37,9 @@
                     </div>
                     <div class="product-cell status-cell">{{ $familie->adres }}</div>
                     <div class="product-cell price">
-                      <a href="/familie/edit/{{ $familie->id }}"><i style="color: white; margin: 5px;" class="fas fa-pencil"></i></a>
-                      <a href="{{ route('deleteFamily', $familie->id) }}"><i style="color: white; margin: 5px;" class="fas fa-trash"></i></a>
+                      <a href="/members/{{ $familie->id }}" title="Family members"><i style="color: white; margin: 5px;" class="fas fa-user"></i></a>
+                      <a href="/familie/edit/{{ $familie->id }}" title="Edit family"><i style="color: white; margin: 5px;" class="fas fa-pencil"></i></a>
+                      <a href="{{ route('deleteFamily', $familie->id) }}" title="Delete family"><i style="color: white; margin: 5px;" class="fas fa-trash"></i></a>
                     </div>
                 </div>
               @endforeach

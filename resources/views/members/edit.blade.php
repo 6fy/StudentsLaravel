@@ -15,20 +15,20 @@
 
   <div class="app-content">
     @include('includes.header', [
-      'mainTitle' => "Edit family: " . $data['family']->naam, 
+      'mainTitle' => "Edit family member " . $data['formattedName'], 
       'buttons' => [
-        ['title' => "Back to the familie panel", 'href' => "/familie"], 
-        ['title' => "Back to the dashboard", 'href' => "/dashboard"]
+        ['title' => "Back to " . $data['family']->naam, 'href' => "/members/" . $data['family']->id], 
+        ['title' => "Back to the families", 'href' => "/familie"]
       ]
     ])
     
     <div class="products-area-wrapper tableView">
         <section class="form-holder">
-            <form method="post" action="{{ route('editFamily', $data['family']->id) }}" accept-charset="UTF-8">
+            <form method="post" action="{{ route('editFamilyMember', $data['member']->id) }}" accept-charset="UTF-8">
                 @csrf
 
-                <label for="name">Family name</label>
-                <input type="text" name="name" placeholder="Enter the family name" value="{{ $data['family']->naam }}">
+                <label for="name">Family member name</label>
+                <input type="text" name="name" placeholder="Enter the name of the member" value="{{ $data['member']->naam }}">
 
                 <span>
                     @error('name')
@@ -37,17 +37,17 @@
                 </span>
                 <br />
 
-                <label for="address">Family address</label>
-                <input type="address" name="address" placeholder="Enter the address" value="{{ $data['family']->adres }}">
+                <label for="name">Family member birthdate</label>
+                <input type="date" name="birthdate" placeholder="Enter the birth date of the member" value="{{ $data['member']->geboorte_datum }}">
 
                 <span>
-                    @error('address')
+                    @error('birthdate')
                         <p>{{ $message }}</p>
                     @enderror
                 </span>
                 <br />
 
-                <button type="submit">Edit family</button>
+                <button type="submit">Edit family member</button>
             </form>
         </section>
     </div>

@@ -42,8 +42,8 @@ Route::get('/familie/edit/{id}', [ FamilieController::class, 'editFamilyView' ])
 /*
     Family Member views
 */
-Route::get('/members', [ FamilieMemberController::class, 'familieMemberView' ])->middleware('isAnAdministrator');
-Route::get('/members/add', [ FamilieMemberController::class, 'addFamilieMemberView' ])->middleware('isAnAdministrator');
+Route::get('/members/{id}', [ FamilieMemberController::class, 'familieMemberView' ])->middleware('isAnAdministrator');
+Route::get('/members/{id}/add', [ FamilieMemberController::class, 'addFamilieMemberView' ])->middleware('isAnAdministrator');
 Route::get('/members/edit/{id}', [ FamilieMemberController::class, 'editFamilyMemberView' ])->middleware('isAnAdministrator');
 
 
@@ -77,6 +77,6 @@ Route::get('deleteFamilyRoute/{id}', [ FamilieController::class, 'deleteFamily' 
 /*
     Family member functions
 */
-Route::post('addFamilyMemberRoute', [ FamilieMemberController::class, 'addFamilyMember' ])->middleware('isAnAdministrator')->name('addFamilyMember');
+Route::post('addFamilyMemberRoute/{id}', [ FamilieMemberController::class, 'addFamilyMember' ])->middleware('isAnAdministrator')->name('addFamilyMember');
 Route::post('editFamilyMemberRoute/{id}', [ FamilieMemberController::class, 'editFamilyMember' ])->middleware('isAnAdministrator')->name('editFamilyMember');
 Route::get('deleteFamilyMemberRoute/{id}', [ FamilieMemberController::class, 'deleteFamilyMember' ])->middleware('isAnAdministrator')->name('deleteFamilyMember');
