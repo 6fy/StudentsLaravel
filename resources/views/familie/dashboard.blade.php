@@ -26,6 +26,7 @@
             <div class="product-cell category">Id</div>
                 <div class="product-cell image">Family name</div>
                 <div class="product-cell status-cell">Address</div>
+                <div class="product-cell status-cell">Total contribution</div>
                 <div class="product-cell price">Actions</div>
             </div>
 
@@ -33,9 +34,10 @@
                 <div class="products-row">
                     <div class="product-cell category">{{ $familie->id }}</div>
                     <div class="product-cell image">
-                        <span>{{ $familie->naam }}</span>
+                        <span>{{ $familie->name }}</span>
                     </div>
-                    <div class="product-cell status-cell">{{ $familie->adres }}</div>
+                    <div class="product-cell status-cell">{{ $familie->address }}</div>
+                    <div class="product-cell status-cell">€</div>
                     <div class="product-cell price">
                       <a href="/members/{{ $familie->id }}" title="Family members"><i style="color: white; margin: 5px;" class="fas fa-user"></i></a>
                       <a href="/familie/edit/{{ $familie->id }}" title="Edit family"><i style="color: white; margin: 5px;" class="fas fa-pencil"></i></a>

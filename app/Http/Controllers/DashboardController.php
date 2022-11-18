@@ -12,6 +12,7 @@ class DashboardController extends Controller
     public function index()
     {
         $user = User::where('id', '=', Session::get('loginId'))->first();
+        if (!$user) return view('auth.login');
 
         $data = [
             'user' => $user

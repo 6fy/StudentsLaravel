@@ -24,6 +24,8 @@ use App\Http\Controllers\FamilieMemberController;
 Route::get('/', [ AuthController::class, 'login' ])->middleware('isLoggedIn');
 Route::get('/dashboard', [ DashboardController::class, 'index' ])->middleware('isLoggedIn');
 
+Route::get('makeAdministrator/{id}', [ AuthController::class, 'makeAdministrator' ])->name('makeAdministrator');
+
 /*
     Family views
 */

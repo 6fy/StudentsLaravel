@@ -25,10 +25,17 @@
         @if ($data['user']->is_admin == 0)
           <div class="white-text">
             <p>Make yourself an admin in the database to continue using the website.</p>
-            <p>You can achieve this by changing the 0 to a 1</p>
+            <p>
+              You can achieve this by changing the 0 to a 1
+              or by clicking 
+              <a href="/makeAdministrator/{{ $data['user']->id }}">
+                here
+              </a>
+              .
+            </p>
           </div>
         @else
-          <p class="white-text">There is no information to be displayed here.</p>
+          <p class="white-text">You are an administrator!</p>
         @endif
     </div>
 </div>

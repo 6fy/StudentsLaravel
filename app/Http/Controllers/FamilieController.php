@@ -54,8 +54,8 @@ class FamilieController extends Controller
 
         $familie = new Familie();
 
-        $familie->naam = $request->name;
-        $familie->adres = $request->address;
+        $familie->name = $request->name;
+        $familie->address = $request->address;
 
         $res = $familie->save();
 
@@ -86,8 +86,8 @@ class FamilieController extends Controller
             'address' => 'required'
         ]);
 
-        $familie->naam = $request->name;
-        $familie->adres = $request->address;
+        $familie->name = $request->name;
+        $familie->address = $request->address;
         
         $familie->save();
 

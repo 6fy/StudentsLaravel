@@ -7,6 +7,8 @@
     <title>Ledenadministratie - Add a family</title>
     <script src="https://kit.fontawesome.com/a71e7d302d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{{ url('css/app.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="{{ url('js/prevent_duplicates.js') }}" defer></script>
 </head>
 <body>
 
@@ -25,7 +27,7 @@
     <div class="products-area-wrapper tableView">
 
         <section class="form-holder">
-            <form method="post" action="{{ route('addFamily') }}" accept-charset="UTF-8">
+            <form method="post" id="form" action="{{ route('addFamily') }}" accept-charset="UTF-8">
                 @csrf
 
                 <label for="name">Family name</label>
@@ -48,7 +50,7 @@
                 </span>
                 <br />
 
-                <button type="submit">Add family</button>
+                <button type="submit" id="prevent-duplicate-btn">Add family</button>
             </form>
         </section>
 

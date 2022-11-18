@@ -35,9 +35,9 @@ class FamilieMemberController extends Controller
 
         $user = User::where('id', '=', Session::get('loginId'))->first();
 
-        $name = ucfirst($member->naam);
-        if (!str_contains(strtolower($member->naam), strtolower($family->naam))) {
-            $name = $name . " " . ucfirst($family->naam);
+        $name = ucfirst($member->name);
+        if (!str_contains(strtolower($member->name), strtolower($family->name))) {
+            $name = $name . " " . ucfirst($family->name);
         }
 
         $data = [
@@ -73,10 +73,10 @@ class FamilieMemberController extends Controller
 
         $member = new FamilieLid();
 
-        $member->naam = $request->name;
-        $member->geboorte_datum = $request->birthdate;
+        $member->name = $request->name;
+        $member->date_of_birth = $request->birthdate;
         $member->lid = '?';
-        $member->familie_id = $id;
+        $member->family_id = $id;
 
         $res = $member->save();
 
@@ -107,8 +107,8 @@ class FamilieMemberController extends Controller
             'birthdate' => 'required'
         ]);
 
-        $member->naam = $request->name;
-        $member->geboorte_datum = $request->birthdate;
+        $member->name = $request->name;
+        $member->date_of_birth = $request->birthdate;
         $member->lid = '?';
         
         $member->save();

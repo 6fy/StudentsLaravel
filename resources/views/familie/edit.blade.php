@@ -15,7 +15,7 @@
 
   <div class="app-content">
     @include('includes.header', [
-      'mainTitle' => "Edit family: " . $data['family']->naam, 
+      'mainTitle' => "Edit family: " . $data['family']->name, 
       'buttons' => [
         ['title' => "Back to the familie panel", 'href' => "/familie"], 
         ['title' => "Back to the dashboard", 'href' => "/dashboard"]
@@ -28,7 +28,7 @@
                 @csrf
 
                 <label for="name">Family name</label>
-                <input type="text" name="name" placeholder="Enter the family name" value="{{ $data['family']->naam }}">
+                <input type="text" name="name" placeholder="Enter the family name" value="{{ $data['family']->name }}">
 
                 <span>
                     @error('name')
@@ -38,7 +38,7 @@
                 <br />
 
                 <label for="address">Family address</label>
-                <input type="address" name="address" placeholder="Enter the address" value="{{ $data['family']->adres }}">
+                <input type="address" name="address" placeholder="Enter the address" value="{{ $data['family']->address }}">
 
                 <span>
                     @error('address')

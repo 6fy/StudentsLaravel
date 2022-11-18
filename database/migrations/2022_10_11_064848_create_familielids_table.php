@@ -16,12 +16,12 @@ class CreateFamilielidsTable extends Migration
         Schema::create('familielids', function (Blueprint $table) {
             $table->id();
 
-            $table->string('naam');
-            $table->string('geboorte_datum');
+            $table->string('name');
+            $table->string('date_of_birth');
             $table->string('lid');
 
-            $table->unsignedBigInteger('familie_id');
-            $table->foreign('familie_id')->references('id')->on('families')->onDelete('cascade');
+            $table->unsignedBigInteger('family_id');
+            $table->foreign('family_id')->references('id')->on('families')->onDelete('cascade');
 
             $table->timestamps();
         });

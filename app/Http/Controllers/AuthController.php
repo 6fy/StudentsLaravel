@@ -63,6 +63,17 @@ class AuthController extends Controller
         }
     }
 
+    public function makeAdministrator($id)
+    {
+        $user = User::where('id', '=', Session::get('loginId'))->first();
+        if (!$user) return view('/dashboard');
+
+        $user->is_admin = 1;
+        $user->save();
+
+        return redirect('/dashboard');
+    }
+
     public function loginUser(Request $request) 
     {
         $request->validate([

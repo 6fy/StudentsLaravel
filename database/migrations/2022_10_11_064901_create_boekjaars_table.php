@@ -15,7 +15,7 @@ class CreateBoekjaarsTable extends Migration
     {
         Schema::create('boekjaars', function (Blueprint $table) {
             $table->id();
-            $table->integer('boekjaar');
+            $table->integer('bookyear');
             $table->timestamps();
         });
     }

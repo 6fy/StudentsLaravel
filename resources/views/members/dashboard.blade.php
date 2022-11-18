@@ -14,7 +14,7 @@
   @include('includes.sidebar')
   <div class="app-content">
     @include('includes.header', [
-      'mainTitle' => "Family members of " . $data['family']->naam, 
+      'mainTitle' => "Family members of " . $data['family']->name, 
       'buttons' => [
         ['title' => "Add a family member", 'href' => "/members/" . $data['family']->id . "/add"], 
         ['title' => "Back to the dashboard", 'href' => "/dashboard"]
@@ -35,16 +35,16 @@
                 <div class="products-row">
                     <div class="product-cell category">{{ $member->id }}</div>
                     <div class="product-cell category">
-                      {{ ucfirst($member->naam) }} 
-                      @if (!str_contains(strtolower($member->naam), strtolower($data['family']->naam)))
-                        {{ ucfirst($data['family']->naam) }}
+                      {{ ucfirst($member->name) }} 
+                      @if (!str_contains(strtolower($member->name), strtolower($data['family']->name)))
+                        {{ ucfirst($data['family']->name) }}
                       @endif
                     </div>
                     <div class="product-cell image">
-                        <span>{{ $member->naam }}</span>
+                        <span>{{ $member->name }}</span>
                     </div>
                     <div class="product-cell image">
-                        <span>{{ $member->geboorte_datum }}</span>
+                        <span>{{ $member->date_of_birth }}</span>
                     </div>
                     <div class="product-cell status-cell">{{ $member->lid }}</div>
                     <div class="product-cell price">

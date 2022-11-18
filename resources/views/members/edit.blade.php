@@ -17,7 +17,7 @@
     @include('includes.header', [
       'mainTitle' => "Edit family member " . $data['formattedName'], 
       'buttons' => [
-        ['title' => "Back to " . $data['family']->naam, 'href' => "/members/" . $data['family']->id], 
+        ['title' => "Back to " . $data['family']->name, 'href' => "/members/" . $data['family']->id], 
         ['title' => "Back to the families", 'href' => "/familie"]
       ]
     ])
@@ -28,7 +28,7 @@
                 @csrf
 
                 <label for="name">Family member name</label>
-                <input type="text" name="name" placeholder="Enter the name of the member" value="{{ $data['member']->naam }}">
+                <input type="text" name="name" placeholder="Enter the name of the member" value="{{ $data['member']->name }}">
 
                 <span>
                     @error('name')
@@ -38,7 +38,7 @@
                 <br />
 
                 <label for="name">Family member birthdate</label>
-                <input type="date" name="birthdate" placeholder="Enter the birth date of the member" value="{{ $data['member']->geboorte_datum }}">
+                <input type="date" name="birthdate" placeholder="Enter the birth date of the member" value="{{ $data['member']->date_of_birth }}">
 
                 <span>
                     @error('birthdate')
