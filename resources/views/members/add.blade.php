@@ -19,7 +19,7 @@
     @include('includes.header', [
       'mainTitle' => "Add a family member to " . $data['family']->name, 
       'buttons' => [
-        ['title' => "Back to the family member panel", 'href' => "/members"], 
+        ['title' => "Back to " . $data['family']->name, 'href' => "/members/" . $data['family']->id ], 
         ['title' => "Back to the dashboard", 'href' => "/dashboard"]
       ]
     ])
@@ -48,6 +48,14 @@
                         <p>{{ $message }}</p>
                     @enderror
                 </span>
+                <br />
+
+                <label for="type">Family member type</label>
+                <select id="type" name="type">
+                    @foreach ($data['types'] as $type)
+                        <option value="{{$type['title']}}">{{ $type['description'] }}</option>
+                    @endforeach
+                </select>
                 <br />
 
                 <button type="submit" id="prevent-duplicate-btn">Add family member</button>

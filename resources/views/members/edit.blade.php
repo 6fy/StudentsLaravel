@@ -47,6 +47,18 @@
                 </span>
                 <br />
 
+                <label for="type">Family member type</label>
+                <select id="type" name="type">
+                    @foreach ($data['types'] as $type)
+                        @if ($type['id'] == $data['member']->lid)
+                            <option value="{{$type['title']}}" selected>{{ $type['description'] }}</option>
+                        @else
+                            <option value="{{$type['title']}}">{{ $type['description'] }}</option>
+                        @endif
+                    @endforeach
+                </select>
+                <br />
+
                 <button type="submit">Edit family member</button>
             </form>
         </section>

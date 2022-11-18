@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Lid;
 use App\Models\Familie;
 use App\Models\FamilieLid;
 use Session;
@@ -19,7 +20,8 @@ class FamilieMemberController extends Controller
 
         $data = [
             'user' => $user,
-            'family' => $family
+            'family' => $family,
+            'types' => Lid::all()
         ];
 
         return view('members.add', [ 'data' => $data ]);
@@ -30,7 +32,7 @@ class FamilieMemberController extends Controller
         $member = FamilieLid::find($id);
         if ($member == null) return redirect('/members');
 
-        $family = Familie::find($member->familie_id);
+        $family = Familie::find($member->family_id);
         if ($family == null) return redirect('/familie');
 
         $user = User::where('id', '=', Session::get('loginId'))->first();
@@ -44,7 +46,8 @@ class FamilieMemberController extends Controller
             'member' => $member,
             'formattedName' => $name,
             'family' => $family,
-            'user' => $user
+            'user' => $user,
+            'types' => Lid::all()
         ];
 
         return view('members.edit', [ 'data' => $data ]);
@@ -58,7 +61,8 @@ class FamilieMemberController extends Controller
         $data = [
             'user' => $user = User::where('id', '=', Session::get('loginId'))->first(),
             'family' => $family,
-            'members' => FamilieLid::where('familie_id', '=', $id)->get()
+            'members' => FamilieLid::where('family_id', '=', $id)->get(),
+            'types' => collect(Lid::all())
         ];
 
         return view('members.dashboard', [ 'data' => $data ]);
@@ -73,9 +77,11 @@ class FamilieMemberController extends Controller
 
         $member = new FamilieLid();
 
+        $type = Lid::where('title', '=', $request->type)->first();
+
         $member->name = $request->name;
         $member->date_of_birth = $request->birthdate;
-        $member->lid = '?';
+        $member->lid = $type->id;
         $member->family_id = $id;
 
         $res = $member->save();
@@ -94,7 +100,7 @@ class FamilieMemberController extends Controller
 
         $member->delete();
 
-        return redirect('/members/' . $member->familie_id);
+        return redirect('/members/' . $member->family_id);
     }
 
     public function editFamilyMember(Request $request, $id)
@@ -107,12 +113,14 @@ class FamilieMemberController extends Controller
             'birthdate' => 'required'
         ]);
 
+        $type = Lid::where('title', '=', $request->type)->first();
+
         $member->name = $request->name;
         $member->date_of_birth = $request->birthdate;
-        $member->lid = '?';
+        $member->lid = $type->id;
         
         $member->save();
 
-        return redirect('/members/' . $member->familie_id);
+        return redirect('/members/' . $member->family_id);
     }
 }

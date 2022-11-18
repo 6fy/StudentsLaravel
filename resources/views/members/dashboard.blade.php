@@ -17,6 +17,7 @@
       'mainTitle' => "Family members of " . $data['family']->name, 
       'buttons' => [
         ['title' => "Add a family member", 'href' => "/members/" . $data['family']->id . "/add"], 
+        ['title' => "Back to families", 'href' => "/familie"], 
         ['title' => "Back to the dashboard", 'href' => "/dashboard"]
       ]
     ])
@@ -46,7 +47,7 @@
                     <div class="product-cell image">
                         <span>{{ $member->date_of_birth }}</span>
                     </div>
-                    <div class="product-cell status-cell">{{ $member->lid }}</div>
+                    <div class="product-cell status-cell">{{ $data['types']->where('id', $member->lid)->first()->title }}</div>
                     <div class="product-cell price">
                       <a href="/members/edit/{{ $member->id }}" title="Edit family member"><i style="color: white; margin: 5px;" class="fas fa-pencil"></i></a>
                       <a href="{{ route('deleteFamilyMember', $member->id) }}" title="Delete family member"><i style="color: white; margin: 5px;" class="fas fa-trash"></i></a>
