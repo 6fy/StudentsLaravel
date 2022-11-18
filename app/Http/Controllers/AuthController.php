@@ -14,7 +14,12 @@ class AuthController extends Controller
     {
         if (Session::has('loginId')) {
             $user = User::where('id', '=', Session::get('loginId'))->first();
-            return view('dashboard', compact('user'));
+            
+            $data = [
+                'user' => $user
+            ];
+
+            return view('dashboard', ['data' => $data]);
         }
 
         return view('auth.login');
@@ -24,7 +29,12 @@ class AuthController extends Controller
     {
         if (Session::has('loginId')) {
             $user = User::where('id', '=', Session::get('loginId'))->first();
-            return view('dashboard', compact('user'));
+
+            $data = [
+                'user' => $user
+            ];
+
+            return view('dashboard', ['data' => $data]);
         }
 
         return view('auth.register');
@@ -57,7 +67,14 @@ class AuthController extends Controller
         if ($res) {
             session()->put('loginId', $user->id);
             $request->session()->put('loginId', $user->id);
-            return redirect('/dashboard');
+
+            $user = User::where('id', '=', Session::get('loginId'))->first();
+            
+            $data = [
+                'user' => $user
+            ];
+
+            return view('/dashboard', ['data' => $data]);
         } else {
             return redirect('/register');
         }
@@ -66,12 +83,16 @@ class AuthController extends Controller
     public function makeAdministrator($id)
     {
         $user = User::where('id', '=', Session::get('loginId'))->first();
-        if (!$user) return view('/dashboard');
+        if (!$user) return view('/login');
 
         $user->is_admin = 1;
         $user->save();
 
-        return redirect('/dashboard');
+        $data = [
+            'user' => $user
+        ];
+
+        return view('/dashboard', [ 'data' => $data ]);
     }
 
     public function loginUser(Request $request) 
@@ -92,7 +113,14 @@ class AuthController extends Controller
 
         session()->put('loginId', $user->id);
         $request->session()->put('loginId', $user->id);
-        return redirect('/dashboard');
+
+        $user = User::where('id', '=', Session::get('loginId'))->first();
+            
+        $data = [
+            'user' => $user
+        ];
+
+        return view('/dashboard', ['data' => $data]);
     }
 
 }

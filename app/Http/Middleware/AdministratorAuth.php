@@ -22,8 +22,13 @@ class AdministratorAuth
         }
 
         $user = User::where('id', '=', Session()->get('loginId'))->first();
-        if (!$user->is_admin == 1) {
-            return redirect('/admin')->with('failed', 'You are not an administrator!');
+
+        if (isset($user->is_admin)) {
+            if (!$user->is_admin == 1) {
+                return redirect('/admin')->with('failed', 'You are not an administrator!');
+            }
+        } else {
+            return redirect('/login')->with('failed', 'Failed to fetch your user data!');
         }
         
         return $next($request);
