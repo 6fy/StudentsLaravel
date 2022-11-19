@@ -8,7 +8,7 @@
     <script src="https://kit.fontawesome.com/a71e7d302d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{{ url('css/app.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script src="{{ url('js/prevent_duplicates.js') }}" defer></script>
+    <script src="{{ url('js/form_helper.js') }}" defer></script>
 </head>
 <body>
 

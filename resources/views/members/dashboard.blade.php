@@ -29,6 +29,7 @@
                 <div class="product-cell status-cell">Name</div>
                 <div class="product-cell status-cell">Birth date</div>
                 <div class="product-cell status-cell">Type</div>
+                <div class="product-cell status-cell">Total contributed</div>
                 <div class="product-cell price">Actions</div>
             </div>
 
@@ -48,7 +49,11 @@
                         <span>{{ $member->date_of_birth }}</span>
                     </div>
                     <div class="product-cell status-cell">{{ $data['types']->where('id', $member->lid)->first()->title }}</div>
+                    <div class="product-cell image">
+                        <span>€</span>
+                    </div>
                     <div class="product-cell price">
+                      <a href="/contribution/{{ $member->id }}" title="Add contribution"><i style="color: white; margin: 5px;" class="fas fa-suitcase"></i></a>
                       <a href="/members/edit/{{ $member->id }}" title="Edit family member"><i style="color: white; margin: 5px;" class="fas fa-pencil"></i></a>
                       <a href="{{ route('deleteFamilyMember', $member->id) }}" title="Delete family member"><i style="color: white; margin: 5px;" class="fas fa-trash"></i></a>
                     </div>

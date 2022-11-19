@@ -8,7 +8,7 @@
     <script src="https://kit.fontawesome.com/a71e7d302d.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="{{ url('css/app.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script src="{{ url('js/prevent_duplicates.js') }}" defer></script>
+    <script src="{{ url('js/form_helper.js') }}" defer></script>
 </head>
 <body>
 
@@ -41,7 +41,7 @@
                 <br />
 
                 <label for="name">Family member birthdate</label>
-                <input type="date" name="birthdate" placeholder="Enter the birth date of the member" value="{{ old('birthdate') }}">
+                <input type="date" id="date-input" name="birthdate" placeholder="Enter the birth date of the member" value="{{ old('birthdate') }}">
 
                 <span>
                     @error('birthdate')
@@ -51,6 +51,7 @@
                 <br />
 
                 <label for="type">Family member type</label>
+                <p id="help-message"></p>
                 <select id="type" name="type">
                     @foreach ($data['types'] as $type)
                         <option value="{{$type['title']}}">{{ $type['description'] }}</option>

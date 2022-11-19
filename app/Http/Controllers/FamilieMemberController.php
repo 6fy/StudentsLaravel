@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Contributie;
 use App\Models\Lid;
 use App\Models\Familie;
 use App\Models\FamilieLid;
@@ -58,10 +59,12 @@ class FamilieMemberController extends Controller
         $family = Familie::find($id);
         if ($family == null) return redirect('/familie');
 
+        $members = FamilieLid::where('family_id', '=', $id)->get();
+
         $data = [
             'user' => $user = User::where('id', '=', Session::get('loginId'))->first(),
             'family' => $family,
-            'members' => FamilieLid::where('family_id', '=', $id)->get(),
+            'members' => $members,
             'types' => collect(Lid::all())
         ];
 
