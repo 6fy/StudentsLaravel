@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Familie;
+use App\Models\Contributie;
+use App\Models\FamilieLid;
 use Session;
 
 class FamilieController extends Controller
@@ -37,9 +39,31 @@ class FamilieController extends Controller
 
     public function familieView()
     {
+        $families = Familie::all();
+
+        $con = array();
+        foreach ($families as $fam) {
+            $members = FamilieLid::where('family_id', '=', $fam->id)->get();
+
+            $amount = 0;
+            foreach ($members as $mem) {
+                $contributed = Contributie::where('familie_lid', '=', $mem->id)->get();
+
+                foreach ($contributed as $contribution) {
+                    $amount += $contribution['amount'];
+                }
+            }
+
+            $con[$fam->id] = [
+                'id' => $fam->id,
+                'amount' => $amount
+            ];
+        }
+
         $data = [
             'user' => $user = User::where('id', '=', Session::get('loginId'))->first(),
-            'families' => Familie::all()
+            'families' => $families,
+            'contribution' => collect($con)
         ];
 
         return view('familie.dashboard', [ 'data' => $data ]);

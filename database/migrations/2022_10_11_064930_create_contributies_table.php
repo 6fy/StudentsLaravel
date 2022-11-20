@@ -16,16 +16,14 @@ class CreateContributiesTable extends Migration
         Schema::create('contributies', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('lid_id');
-            $table->unsignedBigInteger('bookyear_id');
-
-            $table->integer('bookyearId');
-            $table->integer('familyLidId');
             $table->integer('age');
-            $table->integer('lid');
+            $table->integer('lid_type');
             $table->integer('amount');
 
-            $table->foreign('lid_id')->references('id')->on('lids')->onDelete('cascade');
+            $table->unsignedBigInteger('familie_lid');
+            $table->foreign('familie_lid')->references('id')->on('lids')->onDelete('cascade');
+
+            $table->unsignedBigInteger('bookyear_id');
             $table->foreign('bookyear_id')->references('id')->on('boekjaars')->onDelete('cascade');
 
             $table->timestamps();

@@ -51,7 +51,6 @@
                 <br />
 
                 <label for="type">Family member type</label>
-                <p id="help-message"></p>
                 <select id="type" name="type">
                     @foreach ($data['types'] as $type)
                         <option value="{{$type['title']}}">{{ $type['description'] }}</option>

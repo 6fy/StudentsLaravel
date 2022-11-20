@@ -50,7 +50,7 @@
                     </div>
                     <div class="product-cell status-cell">{{ $data['types']->where('id', $member->lid)->first()->title }}</div>
                     <div class="product-cell image">
-                        <span>€</span>
+                        <span>€{{ $data['contribution']->where('id', $member->id)->first()['amount'] }}</span>
                     </div>
                     <div class="product-cell price">
                       <a href="/contribution/{{ $member->id }}" title="Add contribution"><i style="color: white; margin: 5px;" class="fas fa-suitcase"></i></a>

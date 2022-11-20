@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ContributionController;
 use App\Http\Controllers\FamilieController;
 use App\Http\Controllers\FamilieMemberController;
 
@@ -16,6 +17,12 @@ use App\Http\Controllers\FamilieMemberController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+*/
+
+/*
+    <------------
+    Views
+    ------------>
 */
 
 /*
@@ -44,9 +51,23 @@ Route::get('/members/edit/{id}', [ FamilieMemberController::class, 'editFamilyMe
 /*
     Login views
 */
-Route::get('/login', [ AuthController::class, 'login' ])->middleware('alreadyLoggedIn');
+Route::get('/login', [ AuthController::class, 'login' ])->middleware('alreadyLoggedIn')->name('login');
 Route::get('/register', [ AuthController::class, 'register' ])->middleware('alreadyLoggedIn');
 Route::get('/logout', [ AuthController::class, 'logout' ])->middleware('isLoggedIn');
+
+/*
+    Contribution views
+*/
+Route::get('/contribution/{id}', [ ContributionController::class, 'contributionDashboardView' ])->middleware('isAnAdministrator');
+Route::get('/contribution/add/{id}', [ ContributionController::class, 'addContributionView' ])->middleware('isAnAdministrator');
+Route::get('/contribution/edit/{id}', [ ContributionController::class, 'editContributionView' ])->middleware('isAnAdministrator');
+
+
+/*
+    <------------
+    Functions
+    ------------>
+*/
 
 /*
     Login functions
@@ -67,3 +88,10 @@ Route::get('deleteFamilyRoute/{id}', [ FamilieController::class, 'deleteFamily' 
 Route::post('addFamilyMemberRoute/{id}', [ FamilieMemberController::class, 'addFamilyMember' ])->middleware('isAnAdministrator')->name('addFamilyMember');
 Route::post('editFamilyMemberRoute/{id}', [ FamilieMemberController::class, 'editFamilyMember' ])->middleware('isAnAdministrator')->name('editFamilyMember');
 Route::get('deleteFamilyMemberRoute/{id}', [ FamilieMemberController::class, 'deleteFamilyMember' ])->middleware('isAnAdministrator')->name('deleteFamilyMember');
+
+/*
+    Contribution functions
+*/
+Route::post('addContributionRoute/{id}', [ ContributionController::class, 'addContribution' ])->middleware('isAnAdministrator')->name('addContribution');
+Route::post('editContributionRoute/{id}', [ ContributionController::class, 'editContribution' ])->middleware('isAnAdministrator')->name('editContribution');
+Route::get('deleteContributionRoute/{id}', [ ContributionController::class, 'deleteContribution' ])->middleware('isAnAdministrator')->name('deleteContribution');

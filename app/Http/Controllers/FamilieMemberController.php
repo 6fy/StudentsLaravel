@@ -61,11 +61,27 @@ class FamilieMemberController extends Controller
 
         $members = FamilieLid::where('family_id', '=', $id)->get();
 
+        $con = array();
+        foreach ($members as $mem) {
+            $contributed = Contributie::where('familie_lid', '=', $mem->id)->get();
+
+            $amount = 0;
+            foreach ($contributed as $contribution) {
+                $amount += $contribution['amount'];
+            }
+
+            $con[$mem->id] = [
+                'id' => $mem->id,
+                'amount' => $amount
+            ];
+        }
+
         $data = [
             'user' => $user = User::where('id', '=', Session::get('loginId'))->first(),
             'family' => $family,
             'members' => $members,
-            'types' => collect(Lid::all())
+            'types' => collect(Lid::all()),
+            'contribution' => collect($con)
         ];
 
         return view('members.dashboard', [ 'data' => $data ]);

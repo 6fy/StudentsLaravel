@@ -37,7 +37,7 @@
                         <span>{{ $familie->name }}</span>
                     </div>
                     <div class="product-cell status-cell">{{ $familie->address }}</div>
-                    <div class="product-cell status-cell">€</div>
+                    <div class="product-cell status-cell">€{{ $data['contribution']->where('id', $familie->id)->first()['amount'] }}</div>
                     <div class="product-cell price">
                       <a href="/members/{{ $familie->id }}" title="Family members"><i style="color: white; margin: 5px;" class="fas fa-user"></i></a>
                       <a href="/familie/edit/{{ $familie->id }}" title="Edit family"><i style="color: white; margin: 5px;" class="fas fa-pencil"></i></a>

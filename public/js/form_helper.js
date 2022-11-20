@@ -18,7 +18,7 @@ $("#date-input").on("input", function()
 
     let age = Math.floor((today-dob) / (365.25 * 24 * 60 * 60 * 1000));
 
-    $("#help-message").html(`The age ${age} belongs to the type ${getTitleFromAge(age)}`);
+    $("#type").val(getTitleFromAge(age)).change();
 });
 
 function getTitleFromAge(age) 
