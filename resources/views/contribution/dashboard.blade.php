@@ -37,7 +37,7 @@
                   <div class="product-cell image">
                       <span>€{{ $con->amount }}</span>
                   </div>
-                  <div class="product-cell status-cell">{{ $con->bookyear_id }}</div>
+                  <div class="product-cell status-cell">{{ $data['bookyears']->where('id', $con->bookyear_id)->first()['bookyear'] }}</div>
                   <div class="product-cell status-cell">{{ $con->age }}</div>
                   <div class="product-cell price">
                     <a href="/contribution/edit/{{ $con->id }}" title="Edit contribution"><i style="color: white; margin: 5px;" class="fas fa-pencil"></i></a>

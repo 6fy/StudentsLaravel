@@ -18,6 +18,15 @@ class CreateBoekjaarsTable extends Migration
             $table->integer('bookyear');
             $table->timestamps();
         });
+
+        // Insert book years into the database
+        $years = [2021, 2022, 2023];
+        
+        foreach ($years as $year) {
+            DB::table('boekjaars')->insert(
+                [ 'bookyear' => $year ]
+            );
+        }
     }
 
     /**

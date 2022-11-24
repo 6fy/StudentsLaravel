@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FamilieLid;
+use App\Models\Boekjaar;
 use App\Models\Contributie;
 use App\Models\Familie;
 use App\Models\User;
@@ -31,7 +32,8 @@ class ContributionController extends Controller
             'family' => $family,
             'contribution' => ($contribution ? $contribution : array()),
             'formattedName' => $name,
-            'member' => $member
+            'member' => $member,
+            'bookyears' => Boekjaar::all()
         ];
 
         return view('contribution.dashboard', [ 'data' => $data ]);
@@ -62,9 +64,13 @@ class ContributionController extends Controller
         $member = FamilieLid::find($con->familie_lid);
         if ($member == null) return redirect('/familie');
 
+        $bookyear = Boekjaar::find($con->bookyear_id);
+        if ($bookyear == null) return redirect('/familie');
+
         $data = [
             'user' => $user,
             'contribution' => $con,
+            'bookyear' => $bookyear,
             'member' => $member
         ];
 
@@ -74,11 +80,16 @@ class ContributionController extends Controller
     public function addContribution(Request $request, $id)
     {
         $request->validate([
-            'amount' => 'required|numeric'
+            'amount' => 'required|numeric',
+            'bookyear' => 'required|numeric'
         ]);
 
         $member = FamilieLid::find($id);
         if (!$member) return redirect('/familie');
+
+        $bookyear = Boekjaar::where('bookyear', '=', $request->bookyear)->first();
+        // if bookyear not found, create it
+        if (!$bookyear) $bookyear = $this->createBookYear($request->bookyear);
 
         $con = new Contributie();
 
@@ -86,11 +97,20 @@ class ContributionController extends Controller
         $con->lid_type = $member->lid;
         $con->amount = $request->amount;
         $con->familie_lid = $member->id;
-        $con->bookyear_id = 1; // To-do
+        $con->bookyear_id = $bookyear->id;
         
         $res = $con->save();
 
         return $this->contributionDashboardView($id);
+    }
+
+    public function createBookYear($year)
+    {
+        $bookyear = new Boekjaar();
+        $bookyear->bookyear = $year;
+        $bookyear->save();
+
+        return $bookyear;
     }
 
     public function calculateAge($birthDate)
@@ -113,6 +133,7 @@ class ContributionController extends Controller
     {
         $request->validate([
             'age' => 'numeric',
+            'bookyear' => 'numeric',
             'amount' => 'required|numeric'
         ]);
 
@@ -122,11 +143,19 @@ class ContributionController extends Controller
         $member = FamilieLid::find($con->familie_lid);
         if (!$member) return redirect('/familie');
 
+        // create new object
+        $con->amount = $request->amount;
+
         if (isset($request->amount)) {
             $con->age = $request->age;
         }
-        $con->amount = $request->amount;
-        $con->bookyear_id = 1; // To-do
+
+        if (isset($request->bookyear)) {
+            $bookyear = Boekjaar::where('bookyear', '=', $request->bookyear)->first();
+            // if bookyear not found, create it
+            if (!$bookyear) $bookyear = $this->createBookYear($request->bookyear);
+            $con->bookyear_id = $bookyear->id;
+        }
         
         $res = $con->save();
 

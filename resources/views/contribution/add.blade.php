@@ -41,6 +41,16 @@
                 </span>
                 <br />
 
+                <label for="bookyear">Bookyear of the contribution</label>
+                <input type="number" name="bookyear" placeholder="Enter the bookyear when {{ $data['member']->name }} contributed" value="{{ old('bookyear') }}">
+
+                <span>
+                    @error('bookyear')
+                        <p>{{ $message }}</p>
+                    @enderror
+                </span>
+                <br />
+
                 <button type="submit" id="prevent-duplicate-btn">Add Contribution</button>
             </form>
         </section>
