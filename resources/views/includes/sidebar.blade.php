@@ -12,6 +12,12 @@
           <span>Families</span>
         </a>
       </li>
+      <li class="sidebar-list-item">
+        <a href="/bookyear" title="Manage bookyears page">
+          <i style="margin-right: 10px; cursor: pointer;" class="fa-solid fa-calendar"></i>
+          <span>Bookyears</span>
+        </a>
+      </li>
     </ul>
     <div class="account-info">
       <div class="account-info-picture">

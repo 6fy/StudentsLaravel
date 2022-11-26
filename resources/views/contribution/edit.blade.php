@@ -27,9 +27,13 @@
         <section class="form-holder">
             <form method="post" id="form" action="{{ route('editContribution', $data['contribution']->id) }}" accept-charset="UTF-8">
                 @csrf
+                
+                <p class="white-text">Left to pay for {{ $data['member']->name }}: €{{ $data['leftOverContribution'] }}</p>
+                <input type="hidden" id="left" name="left" value="{{$data['leftOverContribution']}}">
 
                 <label for="amount">Amount contributed</label>
-                <input type="number" name="amount" placeholder="Enter the amount {{ $data['member']->name }} contributed" value="{{ $data['contribution']->amount }}">
+                <input type="number" id="contribution-amount" name="amount" 
+                        placeholder="Enter the amount {{ $data['member']->name }} contributed" value="{{ $data['contribution']->amount }}">
 
                 <span>
                     @error('amount')
@@ -49,7 +53,15 @@
                 <br />
 
                 <label for="bookyear">Bookyear of the contribution</label>
-                <input type="number" name="bookyear" placeholder="Enter the bookyear when {{ $data['member']->name }} contributed" value="{{ $data['bookyear']->bookyear }}">
+                <select id="bookyear" name="bookyear">
+                    @foreach ($data['bookyears'] as $year)
+                        @if (date('Y') == $year->bookyear)
+                            <option value="{{ $year->id }}" selected>{{ $year->bookyear }}</option>
+                        @else
+                            <option value="{{ $year->id }}">{{ $year->bookyear }}</option>
+                        @endif
+                    @endforeach
+                </select>
 
                 <span>
                     @error('bookyear')

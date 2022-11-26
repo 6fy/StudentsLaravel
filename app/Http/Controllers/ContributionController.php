@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\BookyearController;
+
 use Illuminate\Http\Request;
 use App\Models\FamilieLid;
 use App\Models\Boekjaar;
 use App\Models\Contributie;
+use App\Models\Lid;
 use App\Models\Familie;
 use App\Models\User;
 use Session;
@@ -46,9 +49,12 @@ class ContributionController extends Controller
         $member = FamilieLid::find($id);
         if ($member == null) return redirect('/familie');
 
+        $bookyearController = new BookyearController;
         $data = [
             'user' => $user,
-            'member' => $member
+            'member' => $member,
+            'leftOverContribution' => $bookyearController->getLeftToPay($member->id),
+            'bookyears' => Boekjaar::all()->sortByDesc("bookyear")
         ];
 
         return view('contribution.add', [ 'data' => $data ]);
@@ -67,11 +73,14 @@ class ContributionController extends Controller
         $bookyear = Boekjaar::find($con->bookyear_id);
         if ($bookyear == null) return redirect('/familie');
 
+        $bookyearController = new BookyearController;
         $data = [
             'user' => $user,
             'contribution' => $con,
             'bookyear' => $bookyear,
-            'member' => $member
+            'member' => $member,
+            'leftOverContribution' => $bookyearController->getLeftToPay($member->id),
+            'bookyears' => Boekjaar::all()->sortByDesc("bookyear")
         ];
 
         return view('contribution.edit', [ 'data' => $data ]);
@@ -87,9 +96,8 @@ class ContributionController extends Controller
         $member = FamilieLid::find($id);
         if (!$member) return redirect('/familie');
 
-        $bookyear = Boekjaar::where('bookyear', '=', $request->bookyear)->first();
-        // if bookyear not found, create it
-        if (!$bookyear) $bookyear = $this->createBookYear($request->bookyear);
+        $bookyear = Boekjaar::where('id', '=', $request->bookyear)->first();
+        if (!$bookyear) return redirect('/familie');
 
         $con = new Contributie();
 
@@ -102,15 +110,6 @@ class ContributionController extends Controller
         $res = $con->save();
 
         return $this->contributionDashboardView($id);
-    }
-
-    public function createBookYear($year)
-    {
-        $bookyear = new Boekjaar();
-        $bookyear->bookyear = $year;
-        $bookyear->save();
-
-        return $bookyear;
     }
 
     public function calculateAge($birthDate)
@@ -151,9 +150,8 @@ class ContributionController extends Controller
         }
 
         if (isset($request->bookyear)) {
-            $bookyear = Boekjaar::where('bookyear', '=', $request->bookyear)->first();
-            // if bookyear not found, create it
-            if (!$bookyear) $bookyear = $this->createBookYear($request->bookyear);
+            $bookyear = Boekjaar::where('id', '=', $request->bookyear)->first();
+            if (!$bookyear) return redirect('/familie');
             $con->bookyear_id = $bookyear->id;
         }
         

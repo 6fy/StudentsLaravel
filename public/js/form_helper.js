@@ -21,6 +21,21 @@ $("#date-input").on("input", function()
     $("#type").val(getTitleFromAge(age)).change();
 });
 
+$("#contribution-amount").on("focusout", function() 
+{
+    let current = $(this).val();
+
+    if (current < 0) {
+        $("#contribution-amount").val(0);
+    }
+
+    let left = $("#left").val();
+
+    if (current > left) {
+        $("#contribution-amount").val(left);
+    }
+});
+
 function getTitleFromAge(age) 
 {
     if (age < 8) {

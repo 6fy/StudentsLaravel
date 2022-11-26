@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ContributionController;
+use App\Http\Controllers\BookyearController;
 use App\Http\Controllers\FamilieController;
 use App\Http\Controllers\FamilieMemberController;
 
@@ -62,6 +63,13 @@ Route::get('/contribution/{id}', [ ContributionController::class, 'contributionD
 Route::get('/contribution/add/{id}', [ ContributionController::class, 'addContributionView' ])->middleware('isAnAdministrator');
 Route::get('/contribution/edit/{id}', [ ContributionController::class, 'editContributionView' ])->middleware('isAnAdministrator');
 
+/*
+    Bookyear views
+*/
+Route::get('/bookyear', [ BookyearController::class, 'bookyearDashboardView' ])->middleware('isAnAdministrator');
+Route::get('/bookyear/add', [ BookyearController::class, 'addBookyearView' ])->middleware('isAnAdministrator');
+Route::get('/bookyear/edit/{id}', [ BookyearController::class, 'editBookyearView' ])->middleware('isAnAdministrator');
+
 
 /*
     <------------
@@ -95,3 +103,10 @@ Route::get('deleteFamilyMemberRoute/{id}', [ FamilieMemberController::class, 'de
 Route::post('addContributionRoute/{id}', [ ContributionController::class, 'addContribution' ])->middleware('isAnAdministrator')->name('addContribution');
 Route::post('editContributionRoute/{id}', [ ContributionController::class, 'editContribution' ])->middleware('isAnAdministrator')->name('editContribution');
 Route::get('deleteContributionRoute/{id}', [ ContributionController::class, 'deleteContribution' ])->middleware('isAnAdministrator')->name('deleteContribution');
+
+/*
+    Bookyear functions
+*/
+Route::post('addBookyearRoute', [ BookyearController::class, 'addBookyear' ])->middleware('isAnAdministrator')->name('addBookyear');
+Route::post('editBookyearRoute/{id}', [ BookyearController::class, 'editBookyear' ])->middleware('isAnAdministrator')->name('editBookyear');
+Route::get('deleteBookyearRoute/{id}', [ BookyearController::class, 'deleteBookyear' ])->middleware('isAnAdministrator')->name('deleteBookyear');

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\BookyearController;
+
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Contributie;
+use App\Models\Boekjaar;
 use App\Models\Lid;
 use App\Models\Familie;
 use App\Models\FamilieLid;
@@ -62,6 +65,7 @@ class FamilieMemberController extends Controller
         $members = FamilieLid::where('family_id', '=', $id)->get();
 
         $con = array();
+        $leftToPay = array();
         foreach ($members as $mem) {
             $contributed = Contributie::where('familie_lid', '=', $mem->id)->get();
 
@@ -74,6 +78,12 @@ class FamilieMemberController extends Controller
                 'id' => $mem->id,
                 'amount' => $amount
             ];
+
+            $bookyearController = new BookyearController;
+            $leftToPay[$mem->id] = [
+                'id' => $mem->id,
+                'amount' => $bookyearController->getLeftToPay($mem->id)
+            ];
         }
 
         $data = [
@@ -81,6 +91,7 @@ class FamilieMemberController extends Controller
             'family' => $family,
             'members' => $members,
             'types' => collect(Lid::all()),
+            'leftOverContribution' => collect($leftToPay),
             'contribution' => collect($con)
         ];
 
@@ -93,6 +104,12 @@ class FamilieMemberController extends Controller
             'name' => 'required',
             'birthdate' => 'required'
         ]);
+
+        if ($request->birthdate == null) return back()->with('failed', 'Birthdate is not filled in.');
+
+        $birthdate = date('Y-m-d', strtotime($request->birthdate));
+        $now = date('Y-m-d');
+        if ($birthdate > $now) return back()->with('failed', 'Birthdate is not valid.');
 
         $member = new FamilieLid();
 
@@ -142,4 +159,5 @@ class FamilieMemberController extends Controller
 
         return redirect('/members/' . $member->family_id);
     }
+    
 }

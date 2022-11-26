@@ -26,6 +26,7 @@
             <div class="product-cell category">Id</div>
                 <div class="product-cell image">Family name</div>
                 <div class="product-cell status-cell">Address</div>
+                <div class="product-cell status-cell">Left contribution in {{ date('Y') }}</div>
                 <div class="product-cell status-cell">Total contribution</div>
                 <div class="product-cell price">Actions</div>
             </div>
@@ -37,6 +38,7 @@
                         <span>{{ $familie->name }}</span>
                     </div>
                     <div class="product-cell status-cell">{{ $familie->address }}</div>
+                    <div class="product-cell status-cell">€{{ $data['leftOverContribution']->where('id', $familie->id)->first()['amount'] }}</div>
                     <div class="product-cell status-cell">€{{ $data['contribution']->where('id', $familie->id)->first()['amount'] }}</div>
                     <div class="product-cell price">
                       <a href="/members/{{ $familie->id }}" title="Family members"><i style="color: white; margin: 5px;" class="fas fa-user"></i></a>

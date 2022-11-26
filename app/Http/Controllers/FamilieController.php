@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\BookyearController;
+
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Lid;
 use App\Models\Familie;
 use App\Models\Contributie;
+use App\Models\Boekjaar;
 use App\Models\FamilieLid;
 use Session;
 
@@ -42,27 +46,38 @@ class FamilieController extends Controller
         $families = Familie::all();
 
         $con = array();
+        $leftToPay = array();
         foreach ($families as $fam) {
             $members = FamilieLid::where('family_id', '=', $fam->id)->get();
 
-            $amount = 0;
+            $unpaid = 0;
+            $paid = 0;
             foreach ($members as $mem) {
                 $contributed = Contributie::where('familie_lid', '=', $mem->id)->get();
 
                 foreach ($contributed as $contribution) {
-                    $amount += $contribution['amount'];
+                    $paid += $contribution['amount'];
                 }
+
+                $bookyearController = new BookyearController;
+                $unpaid += $bookyearController->getLeftToPay($mem->id);
             }
 
             $con[$fam->id] = [
                 'id' => $fam->id,
-                'amount' => $amount
+                'amount' => $paid
+            ];
+
+            $leftToPay[$fam->id] = [
+                'id' => $fam->id,
+                'amount' => $unpaid
             ];
         }
 
         $data = [
             'user' => $user = User::where('id', '=', Session::get('loginId'))->first(),
             'families' => $families,
+            'leftOverContribution' => collect($leftToPay),
             'contribution' => collect($con)
         ];
 

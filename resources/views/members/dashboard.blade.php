@@ -29,6 +29,7 @@
                 <div class="product-cell status-cell">Name</div>
                 <div class="product-cell status-cell">Birth date</div>
                 <div class="product-cell status-cell">Type</div>
+                <div class="product-cell status-cell">Left contribution in {{ date('Y') }}</div>
                 <div class="product-cell status-cell">Total contributed</div>
                 <div class="product-cell price">Actions</div>
             </div>
@@ -49,6 +50,7 @@
                         <span>{{ $member->date_of_birth }}</span>
                     </div>
                     <div class="product-cell status-cell">{{ $data['types']->where('id', $member->lid)->first()->title }}</div>
+                    <div class="product-cell status-cell">€{{ $data['leftOverContribution']->where('id', $member->id)->first()['amount'] }}</div>
                     <div class="product-cell image">
                         <span>€{{ $data['contribution']->where('id', $member->id)->first()['amount'] }}</span>
                     </div>

@@ -16,15 +16,20 @@ class CreateBoekjaarsTable extends Migration
         Schema::create('boekjaars', function (Blueprint $table) {
             $table->id();
             $table->integer('bookyear');
+            $table->integer('contribution');
             $table->timestamps();
         });
 
         // Insert book years into the database
-        $years = [2021, 2022, 2023];
+        $years = array(
+            ['year' => 2021, 'contribution' => 200],
+            ['year' => 2022, 'contribution' => 500],
+            ['year' => 2023, 'contribution' => 700]
+        );
         
         foreach ($years as $year) {
             DB::table('boekjaars')->insert(
-                [ 'bookyear' => $year ]
+                [ 'bookyear' => $year['year'], 'contribution' => $year['contribution'] ]
             );
         }
     }
